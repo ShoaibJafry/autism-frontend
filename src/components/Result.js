@@ -1,10 +1,22 @@
-const Result = ({ autismResult }) => {
+import { useState, useEffect} from "react";
+import { Navigate } from "react-router-dom";
 
+const Result = ({ autismResult }) => {
+  const [isLogIn, setIslogIn] = useState(true);
+  
+   
+  useEffect(()=>{
+    const token = localStorage.getItem("token");
+    if(!token){
+        setIslogIn(false);
+    }
+  },[])
 
 
   console.log(autismResult)
   return (
     <div>
+    {!isLogIn && <Navigate to="/" replace />}
       {autismResult?.facialResult ? (
         <div style={{ display: "flex", gap: "0.7rem" }}>
           <h1>Facial Result:</h1>

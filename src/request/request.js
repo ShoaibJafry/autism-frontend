@@ -2,7 +2,6 @@ export const handleFacialAuthismRequest = async (image) => {
   try {
     const formData = new FormData();
     const token = localStorage.getItem("token");
-    console.log(token)
     formData.append("image", image);
     const raw = await fetch("http://0.0.0.0:8000/autism/facial", {
       method: "POST",

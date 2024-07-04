@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
 import "../styles/asd.css";
@@ -6,6 +6,7 @@ import {
   handleFacialAuthismRequest,
   handleNeruoAuthismRequest,
 } from "../request/request";
+import { Navigate } from "react-router-dom";
 
 
 function convertImageToDataURL(imageFile) {
@@ -23,12 +24,20 @@ function convertImageToDataURL(imageFile) {
 
 
 const ASDPage = ({ handlebothAuthism }) => {
+  const [isLogIn, setIslogIn] = useState(true);
   const [authism, setAuthism] = useState({
     neuroImage: {},
     facialImage: {},
     isFacial: false,
     isNeuro: false,
   });
+  
+  useEffect(()=>{
+    const token = localStorage.getItem("token");
+    if(!token){
+        setIslogIn(false);
+    }
+  },[])
 
   const handleUploadImage = async () => {
     if (!authism.isFacial && !authism.isNeuro) {
@@ -39,7 +48,7 @@ const ASDPage = ({ handlebothAuthism }) => {
     let result = { facial: {}, neuro: {} };
 
     if (authism.isNeuro) {
-      result.neuro = await handleNeruoAuthismRequest(authism.neuroImage);
+      result.neuro = await 	(authism.neuroImage);
       const dataURL = await convertImageToDataURL(authism.neuroImage);
       result.neuro = {
         image: dataURL,
@@ -75,6 +84,7 @@ const ASDPage = ({ handlebothAuthism }) => {
 
   return (
     <div>
+          {!isLogIn && <Navigate to="/" replace />}
       <main>
         <section id="about">
           <div className="section-container">
