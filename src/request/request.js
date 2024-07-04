@@ -23,7 +23,6 @@ export const handleNeruoAuthismRequest = async (image) => {
     const formData = new FormData();
     const token = localStorage.getItem("token");
     formData.append("image", image);
-    console.log(token)
     const raw = await fetch("http://0.0.0.0:8000/autism/neuro", {
       method: "POST",
       headers: {

@@ -24,7 +24,7 @@ const App = () => {
   });
 
   const handlebothAuthism = (facialResult, neuroResult) => {
-    setResult({ facialResult, neuroResult });
+    setResult({ facialResult:facialResult, neuroResult:neuroResult });
     <Navigate to="/Result" replace />
   };
 

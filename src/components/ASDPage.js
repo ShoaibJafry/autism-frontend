@@ -7,6 +7,21 @@ import {
   handleNeruoAuthismRequest,
 } from "../request/request";
 
+
+function convertImageToDataURL(imageFile) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(imageFile);
+    reader.onload = function(event) {
+      resolve(event.target.result); // DataURL string
+    };
+    reader.onerror = function(error) {
+      reject(error); // Handle errors during reading
+    };
+  });
+}
+
+
 const ASDPage = ({ handlebothAuthism }) => {
   const [authism, setAuthism] = useState({
     neuroImage: {},
@@ -25,20 +40,27 @@ const ASDPage = ({ handlebothAuthism }) => {
 
     if (authism.isNeuro) {
       result.neuro = await handleNeruoAuthismRequest(authism.neuroImage);
-      result.neuro = { ...result, image: authism.neuroImage };
+      const dataURL = await convertImageToDataURL(authism.neuroImage);
+      result.neuro = {
+        image: dataURL,
+        message: result.neuro.message,
+      };
     }
     if (authism.isFacial) {
       result.facial = await handleFacialAuthismRequest(authism.facialImage);
-      result.facial = { ...result, image: authism.facialImage };
+      const dataURL = await convertImageToDataURL(authism.facialImage);
+      result.facial = { image: dataURL, message: result.facial.message };
     }
 
-    console.log(result);
     handlebothAuthism(result.facial, result.neuro);
   };
 
   const handleFileChange = (evt, type) => {
     const imgFile = evt.target.files[0];
-    if (imgFile && (imgFile.type === "image/jpeg" || imgFile.type === "image/jpg")) {
+    if (
+      imgFile &&
+      (imgFile.type === "image/jpeg" || imgFile.type === "image/jpg")
+    ) {
       setAuthism((state) => ({
         ...state,
         [`${type}Image`]: imgFile,
