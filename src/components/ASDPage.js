@@ -48,7 +48,7 @@ const ASDPage = ({ handlebothAuthism }) => {
     let result = { facial: {}, neuro: {} };
 
     if (authism.isNeuro) {
-      result.neuro = await 	(authism.neuroImage);
+      result.neuro = await handleNeruoAuthismRequest(authism.neuroImage);
       const dataURL = await convertImageToDataURL(authism.neuroImage);
       result.neuro = {
         image: dataURL,
@@ -60,7 +60,7 @@ const ASDPage = ({ handlebothAuthism }) => {
       const dataURL = await convertImageToDataURL(authism.facialImage);
       result.facial = { image: dataURL, message: result.facial.message };
     }
-
+    //console.log(result);
     handlebothAuthism(result.facial, result.neuro);
   };
 

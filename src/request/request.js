@@ -3,7 +3,7 @@ export const handleFacialAuthismRequest = async (image) => {
     const formData = new FormData();
     const token = localStorage.getItem("token");
     formData.append("image", image);
-    const raw = await fetch("http://0.0.0.0:8000/autism/facial", {
+    const raw = await fetch("http://34.202.159.41/autism/facial", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -22,7 +22,7 @@ export const handleNeruoAuthismRequest = async (image) => {
     const formData = new FormData();
     const token = localStorage.getItem("token");
     formData.append("image", image);
-    const raw = await fetch("http://0.0.0.0:8000/autism/neuro", {
+    const raw = await fetch("http://34.202.159.41/autism/neuro", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -38,7 +38,7 @@ export const handleNeruoAuthismRequest = async (image) => {
 
 export const handleLoginRequest = async (formData) => {
   try {
-    const raw = await fetch("http://0.0.0.0:8000/login", {
+    const raw = await fetch("http://34.202.159.41/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export const handleLoginRequest = async (formData) => {
 
 export const handleRequestRequest = async (formData) => {
   try {
-    const raw = await fetch("http://0.0.0.0:8000/registration", {
+    const raw = await fetch("http://34.202.159.41/registration", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
